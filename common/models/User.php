@@ -12,6 +12,8 @@ use yii\helpers\ArrayHelper;
 use backend\models\Status;
 use backend\models\UserType;
 use frontend\models\Profile;
+use common\models\ValueHelpers;
+
 
 /**
  * User model
@@ -31,9 +33,6 @@ use frontend\models\Profile;
  */
 class User extends ActiveRecord implements IdentityInterface
 {
-
-    const STATUS_ACTIVE = 1;
-
 
     public static function tableName()
     {
@@ -66,7 +65,7 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
 
-            ['status_id', 'default', 'value' => self::STATUS_ACTIVE],
+            ['status_id', 'default', 'value' => ValueHelpers::getStatusId('Active')],
             [['status_id'],'in', 'range'=>array_keys($this->getStatusList())],
 
             ['role_id', 'default', 'value' => 1],
@@ -84,7 +83,6 @@ class User extends ActiveRecord implements IdentityInterface
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'unique'],
-
         ];
     }
 
@@ -114,7 +112,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     public static function findIdentity($id)
     {
-        return static::findOne(['id' => $id, 'status_id' => self::STATUS_ACTIVE]);
+        return static::findOne(['id' => $id, 'status_id' => ValueHelpers::getStatusId('Active')]);
     }
 
     /**
@@ -133,7 +131,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     public static function findByUsername($username)
     {
-        return static::findOne(['username' => $username, 'status_id' => self::STATUS_ACTIVE]);
+        return static::findOne(['username' => $username, 'status_id' => ValueHelpers::getStatusId('Active')]);
     }
 
     /**
@@ -152,7 +150,7 @@ class User extends ActiveRecord implements IdentityInterface
 
         return static::findOne([
             'password_reset_token' => $token,
-            'status_id' => self::STATUS_ACTIVE,
+            'status_id' => ValueHelpers::getStatusId('Active'),
         ]);
     }
 
