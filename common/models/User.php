@@ -9,6 +9,8 @@ use yii\web\IdentityInterface;
 use yii\base\Security;
 use backend\models\Role;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
+use yii\helpers\Html;
 use backend\models\Status;
 use backend\models\UserType;
 use frontend\models\Profile;
